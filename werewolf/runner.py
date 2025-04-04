@@ -62,6 +62,7 @@ model_to_id = {
     "gpt4": "gpt-4-turbo-2024-04-09",
     "gpt4o": "gpt-4o-2024-05-13",
     "gpt3.5": "gpt-3.5-turbo-0125",
+    "gpt4o-mini": "gpt-4o-mini-2024-07-18",
 }
 
 
