@@ -1,11 +1,31 @@
 {
     "name": "werewolf_viewer",
     "scripts": {
-        "build": "tsc index.ts --target es2022  --outDir static",
-        "start": "npm run build && http-server"
+        "build": "tsc",
+        "start": "npm run build && http-server",
+        "clean": "rmdir /s /q node_modules static && del package-lock.json"
     },
     "devDependencies": {
-        "typescript": "5.4.5",
-        "http-server": "14.1.1"
-    }
+        "http-server": "14.1.1",
+        "typescript": "^5.4.5"
+    },
+    "dependencies": {
+        "csstype": "^3.1.3",
+        "redux": "^5.0.1"
+    },
+    "version": "1.0.0",
+    "description": "This repository provides code for [Werewolf Arena](https://arxiv.org/abs/2407.13943) - a framework for evaluating the social reasoning skills of large language models (LLMs) through the game of Werewolf.",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rileythejones/werewolf_arena.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "bugs": {
+        "url": "https://github.com/rileythejones/werewolf_arena/issues"
+    },
+    "homepage": "https://github.com/rileythejones/werewolf_arena#readme"
 }
