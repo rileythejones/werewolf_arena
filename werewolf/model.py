@@ -213,21 +213,34 @@ class Player(Deserializable):
   def vote(self) -> tuple[str | None, LmLog]:
     """Vote for a player."""
     if not self.gamestate:
-      raise ValueError(
-          "GameView not initialized. Call initialize_game_view() first."
-      )
+        raise ValueError(
+            "GameView not initialized. Call initialize_game_view() first."
+        )
+
     options = [
         player
         for player in self.gamestate.current_players
         if player != self.name
     ]
     random.shuffle(options)
+
+    import time
+    time.sleep(1)  # brief delay before GPT call
+
     vote, log = self._generate_action("vote", options)
+
+    if vote not in options:
+        print(f"[Retrying Vote] Invalid vote: {vote}. Retrying with delay...")
+        time.sleep(1)
+        vote, log = self._generate_action("vote", options)
+
     if vote is not None and len(self.gamestate.debate) == MAX_DEBATE_TURNS:
-      self._add_observation(
-          f"After the debate, I voted to remove {vote} from the game."
-      )
+        self._add_observation(
+            f"After the debate, I voted to remove {vote} from the game."
+        )
+
     return vote, log
+
 
   def bid(self) -> tuple[int | None, LmLog]:
     """Place a bid."""

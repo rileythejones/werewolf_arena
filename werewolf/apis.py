@@ -25,10 +25,33 @@ from anthropic import AnthropicVertex
 def generate(model, **kwargs):
     if "gpt" in model:
         return generate_openai(model, **kwargs)
+    elif "deepseek" in model:
+        return generate_deepseek(model, **kwargs)
     elif "claude" in model:
         return generate_authropic(model, **kwargs)
     else:
         return generate_vertexai(model, **kwargs)
+
+
+
+# deepseek
+def generate_deepseek(model: str, prompt: str, json_mode: bool = True, **kwargs):
+    client = OpenAI(api_key=os.environ.get("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
+
+    # Override if model doesn't support JSON output
+    if "reasoner" in model.lower():
+        json_mode = False
+
+    response_format = {"type": "json_object"} if json_mode else {"type": "text"}
+
+    response = client.chat.completions.create(
+        messages=[{"role": "user", "content": prompt}],
+        response_format=response_format,
+        model=model,
+    )
+
+    txt = response.choices[0].message.content
+    return txt
 
 
 # openai
